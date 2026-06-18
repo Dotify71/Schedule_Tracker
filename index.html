@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Hub</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="app-logo">
+          <span class="logo-icon">📋</span>
+          <h1>Schedule Hub</h1>
+        </div>
+      </div>
+      <div class="header-center">
+        <button class="nav-btn" id="prevWeekBtn" title="Previous week">‹</button>
+        <div class="week-display">
+          <span id="weekLabel"></span>
+        </div>
+        <button class="nav-btn" id="nextWeekBtn" title="Next week">›</button>
+        <button class="btn btn-secondary" id="todayBtn">Today</button>
+      </div>
+      <div class="header-right">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search tasks..." />
+        </div>
+        <button class="btn btn-primary" id="addTaskBtn">+ New Task</button>
+      </div>
+    </header>
+
+    <!-- Legend / Filters -->
+    <div class="toolbar">
+      <div class="categories-filter" id="categoriesFilter">
+        <span class="filter-label">Categories:</span>
+        <button class="cat-filter active" data-color="#6366f1">Work</button>
+        <button class="cat-filter active" data-color="#10b981">Personal</button>
+        <button class="cat-filter active" data-color="#f59e0b">Meeting</button>
+        <button class="cat-filter active" data-color="#ef4444">Urgent</button>
+        <button class="cat-filter active" data-color="#8b5cf6">Health</button>
+        <button class="cat-filter active" data-color="#ec4899">Social</button>
+      </div>
+      <div class="toolbar-actions">
+        <button class="btn btn-icon" id="undoBtn" title="Undo (Ctrl+Z)">↩</button>
+        <button class="btn btn-icon" id="redoBtn" title="Redo (Ctrl+Shift+Z)">↪</button>
+        <div class="toolbar-divider"></div>
+        <button class="btn btn-icon" id="alarmToggleBtn" title="Toggle Alarm (press A)">🔔</button>
+        <button class="btn btn-icon" id="focusModeBtn" title="Focus Mode (press F)">🎯</button>
+        <div class="toolbar-divider"></div>
+        <div class="view-options">
+          <button class="btn btn-icon active" id="weekViewBtn" title="Week view">📅</button>
+          <button class="btn btn-icon" id="dayViewBtn" title="Day view">📆</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule Grid -->
+    <div class="schedule-container">
+      <div class="schedule-grid-wrapper">
+        <div class="schedule-grid" id="scheduleGrid">
+          <!-- Header row (days) -->
+          <div class="grid-header" id="gridHeader"></div>
+          <!-- Time slots and cells -->
+          <div class="grid-body" id="gridBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div class="modal-overlay" id="taskModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 id="modalTitle">New Task</h2>
+          <button class="modal-close" id="modalCloseBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="taskId" />
+          <input type="hidden" id="taskDay" />
+          <input type="hidden" id="taskStartHour" />
+          
+          <div class="form-group">
+            <label for="taskTitle">Task Title</label>
+            <input type="text" id="taskTitle" placeholder="What do you need to do?" autofocus />
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskDate">Date</label>
+              <input type="date" id="taskDate" />
+            </div>
+            <div class="form-group">
+              <label for="taskCategory">Category</label>
+              <select id="taskCategory">
+                <option value="#6366f1">Work</option>
+                <option value="#10b981">Personal</option>
+                <option value="#f59e0b">Meeting</option>
+                <option value="#ef4444">Urgent</option>
+                <option value="#8b5cf6">Health</option>
+                <option value="#ec4899">Social</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskStartTime">Start Time</label>
+              <input type="time" id="taskStartTime" />
+            </div>
+            <div class="form-group">
+              <label for="taskEndTime">End Time</label>
+              <input type="time" id="taskEndTime" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="taskNotes">Notes</label>
+            <textarea id="taskNotes" placeholder="Optional notes..." rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" id="deleteTaskBtn" style="display:none">Delete</button>
+          <div class="modal-footer-right">
+            <button class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+            <button class="btn btn-primary" id="modalSaveBtn">Save Task</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast-container" id="toastContainer"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
